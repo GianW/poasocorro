@@ -1,0 +1,138 @@
+body{
+	margin: 0 0 0 0;
+	background-color: #FFFFFF; /* #852727   #691616*/
+}
+
+.boxMapa{
+ 	width:  100%;			/*800px;*/
+ 	height:  450px;
+ 	/*margin-left: 15%;*/
+ 	/*border-radius:10px;*/
+ 	/*border: solid 5px gray;*/
+ 	/*box-shadow: 5px 5px 10px black;*/
+ 	/*margin-top: 15%;*/
+
+	       /* flexbox setup */
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+  
+    display: -moz-box;
+    -moz-box-orient: horizontal;
+  
+    display: box;
+    box-orient: horizontal;
+
+ }
+
+ .busca{
+ 	/*width: 100%;*/
+ 	/*overflow: hidden;*/
+ 	background-color: #992020;
+ 	padding: 1%;
+ 	border: 1px solid black;
+ 	/*border-radius:10px;*/
+ 	/*box-shadow: 5px 5px 10px black;*/
+ 	
+
+ }
+	
+.dadosPesquisa{
+	width: 70%;
+	margin-left: 25%;	
+}
+
+ .inputPesquisa{
+ 	width: 70%;
+ 	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-o-border-radius: 5px;
+	-ms-border-radius: 5px;
+	border-radius: 5px;
+ 	padding: 7px;
+ 	background-color: #f0dddd;
+ 	
+ }
+
+ .btPesquisa{
+ 	width: 10%;
+ 	border-radius:8px;	
+ 	padding: 7px;
+ 	background:url(imagens/bg2.png) repeat-x;
+ }
+
+ .btPesquisa:hover{
+ 	background-color: black;
+ 	color: white;
+ }
+
+@font-face {
+     font-family: titulo;
+     src: url(fontes/GRAVO_free_font.ttf);
+}
+
+@font-face{
+	font-family: titulo1;
+	src: url(fontes/Intro Cond Light Free);
+}
+
+h1{
+ 	font:50px titulo, Arial; 	
+ 	/*margin-left: 40%;*/
+ 	/*margin-top: 1%;*/
+ }
+ h1 b{
+ 	font:30px titulo1, Arial;
+ }
+
+
+ .twitter{
+ 	margin-top: 1%;
+ 	margin-left: 6 0%;
+ 	border-radius:8px;
+	border: 1px solid black;
+	width: 40%;
+
+ }
+
+ .infoBox{
+ 	background-color: #FFF;
+ 	width: 300px;
+ 	font-family: Arial, Helvetica, sans-serif;
+ 	font-size: 14px;
+ 	/*border: 2px solid #dcff08;*/
+ 	border-radius: 3px;
+ 	margin-top: 10px;
+ }
+
+.infoBox p { 
+	padding: 0 15px;
+}
+
+.infoBox:before{
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid #3fa7d8;
+	top: -10px;
+	content: "";
+	height: 0;
+	position: absolute;
+	width: 0;
+	left: 138px;
+}
+
+#titulo{
+	cursor:pointer;
+	color: #C12828;
+	margin-left: 40%;
+	width: 20%;	
+	-webkit-transition: all 0.4s linear;
+	-moz-transition: all 0.4s linear;
+	-ms-transition: all 0.4s linear;
+	-o-transition: all 0.4s linear;
+	transition: all 0.4s linear;
+
+}
+
+#titulo:hover{			
+	color:#000;		
+}

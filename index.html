@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>	
+	<title>Dados</title>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" href="css/imagens/img1.png">
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<!-- Bibliotecas Google Maps -->
+	<script src="http://maps.googleapis.com/maps/api/js?sensor=true&key=AIzaSyD1QKjvpmvbSocM9NfoqwFtzKCXmuaGB54"></script>
+	<script src="js/infobox.js"></script>
+    <!-- Agrupamento dos marcadores -->
+	<script src="js/markerclusterer.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<!-- Biblioteca propria -->
+	<script src="js/porto.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/estilo.css"> 
+</head>
+
+<body onload="initialize()">
+	<header>
+		<div id="titulo">
+			<h1>POA<b>Socorro</b></h1>
+		</div>
+	</header>
+	<section class="busca">
+		<div class="dadosPesquisa">
+			<input type="text" class="inputPesquisa"> 
+			<input type="button" value="Pesquisar" class="btPesquisa">
+		</div>			
+	</section>	
+	<div id="mapa" class="boxMapa">		
+	</div>
+	<!--<div class="twitter">		
+		TUITER
+	</div>-->
+
+</body>
+</html>
