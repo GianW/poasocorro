@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Cadastro Estabelecimento</title>
+	<link rel="stylesheet" type="text/css" href="css/estilo.css"> 
+	<style>
+		body{
+			font: arial;
+		}
+		label{
+			padding: 4px;
+		}
+		#cod_estab{
+			width: 25px;
+		}
+		#nome{
+			width: 280px;
+		}
+		#adm, #latitude, #longitude{
+			width: 120px;
+		}
+		#endereco, #site{
+			width: 300px;
+		}
+		#telefone{
+			width: 80px;
+		}
+		input, select{
+			padding: 3px;
+		}
+	</style>
+	<script src="../../js/jquery.min.js"></script>
+	<script>
+		function inicio(){
+			var pesquisa = window.location.search;
+
+			if (pesquisa != "") {
+				var valor = pesquisa.split('=');
+				carregaEstab(valor[1]);
+			};
+		}
+
+		function carregaEstab(cod_estab){
+
+			trataTexto = document.getElementById("trataTexto");
+			inCodEstab = document.getElementById("cod_estab");
+			inNome = document.getElementById("nome");
+			inAdm = document.getElementById("adm"); 
+			inTipo = document.getElementById("tipo");
+			inFone = document.getElementById("telefone");
+			inSite = document.getElementById("site");	
+			inLat = document.getElementById("latitude");
+			inLong = document.getElementById("longitude");
+			inEnd = document.getElementById("endereco");
+
+			$.getJSON('buscaTipo.php?servico=buscaEstab&estab=' + cod_estab, function(pontos){
+				if (pontos != null) {
+					$.each(pontos, function(index, ponto) {
+												
+						inCodEstab.value = ponto.id;
+						
+						trataTexto.innerHTML = ponto.nome;
+						inNome.value = trataTexto.innerHTML;
+
+						trataTexto.innerHTML = ponto.adm;
+						inAdm.value = trataTexto.innerHTML;
+												 
+						trataTexto.innerHTML = ponto.tipo;
+						inTipo.value  = trataTexto.innerHTML;
+						
+						inFone.value = ponto.tel;
+											
+						trataTexto.innerHTML = ponto.site;
+						inSite.value  = trataTexto.innerHTML;
+						
+						inLat.value = ponto.lat;
+						
+						inLong.value = ponto.long;
+												
+						trataTexto.innerHTML = ponto.endereco;
+						inEnd.value  = trataTexto.innerHTML;						
+					});
+				};
+			});	
+		}
+
+		function salvaEstab(){
+			inCodEstab = document.getElementById("cod_estab").value;
+			inNome = document.getElementById("nome").value;
+			inAdm = document.getElementById("adm").value; 
+			inTipo = document.getElementById("tipo").value;
+			inFone = document.getElementById("telefone").value;
+			inSite = document.getElementById("site").value;	
+			inLat = document.getElementById("latitude").value;
+			inLong = document.getElementById("longitude").value;
+			inEnd = document.getElementById("endereco").value;
+
+			var conteudo = inCodEstab + "*" + inNome + "*" + inAdm + "*" + inTipo + "*" + inFone + "*" + inSite + "*" + inLat + "*" + inLong 
+			+ "*" + inEnd;
+
+			$.getJSON('buscaTipo.php?servico=addEstab&estab=' + conteudo, function(pontos){
+				if (pontos != null) {
+					$.each(pontos, function(index, ponto) {
+					})
+				}
+			})
+			
+		}
+	</script>
+</head>
+<body onload="inicio()">
+	
+		<p>
+			<label for="cod_estab">Estab</label>
+			<input type="text" id="cod_estab" disabled>	
+			<input type="text" id="nome">	
+		</p>		
+		<p>
+			<label for="adm">Admin</label>
+			<select name="adm" id="adm">
+				<option value="Público">Público</option>
+				<option value="Privado">Privado</option>
+				<option value="Público|Privado">Público|Privado</option>
+			</select>	
+			<label for="tipo">Tipo</label>
+			<select name="tipo" id="tipo">
+				<option value="Hospital">Hospital</option>
+				<option value="PA">Pronto Atendimento</option>
+				<option value="UBS">Unidade Básica de saúde</option>
+				<option value="ESF">Estratégia de Saúde da família</option>
+				<option value="CS">Centro de Saúde</option>
+				<option value="AEM">Atendimento especializado Municipal</option>
+				<option value="AEC">Atendimento especializado Conveniado</option>				
+			</select>			
+		</p>		
+		<p>
+			<label for="telefone">Fone</label>
+			<input type="text" id="telefone">
+			<label for="latitude">Latitude</label>
+			<input type="text" id="latitude" >	
+			<label for="longitude">Longitude</label>
+			<input type="text" id="longitude" >
+		</p>
+		<p>
+			<label for="site">Site</label>
+			<input type="text" id="site">
+		</p>		
+		<p>
+			<label for="endereco">Endereço</label>
+			<input type="text" id="endereco" >
+		</p>
+		<input type="button" value="Excluir">
+		<input type="button" value="Salvar" onclick="salvaEstab()" >		
+		
+
+	<div id="trataTexto" hidden></div>
+</body>
+</html>
