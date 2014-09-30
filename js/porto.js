@@ -7,8 +7,12 @@ var latlng;
 var directionsService = new google.maps.DirectionsService();
 var directionsDisplay;
 var geocoder;
+var valorDestino = 0;
+var endDestino = "";
+
 
 function localizaUsuario(){
+
 	latUsuario = document.getElementById('latUsuario');
 	longUsuario = document.getElementById('longUsuario');
 
@@ -170,6 +174,14 @@ var avaibleTags = [
 
 ];
 
+$.getJSON('app/services/buscaDados.php?service=listaespecialidades', function(pontos){
+	$.each(pontos, function(index, ponto) {
+		avaibleTags.push(ponto.especialidade);
+
+	});
+});
+
+
  $("#valorPesquisa").autocomplete({
  	source: avaibleTags
  });
@@ -206,16 +218,20 @@ $.getJSON(caminho, function(pontos){
 				animation: google.maps.Animation.DROP
 			});
 			
-			var myOptions = {
-				content: "<p><h3>" + ponto.nome + "</h3><img src='css/imagens/est_cheia.png' alt='1' height='15' width='15'/>"
+			var myOptions = { 				
+				content: "<p><h3>" + ponto.nome + "</h3></p><p>"
+				+ "<img src='" + ponto.img + "' alt=''></p><hr>"
 				+ "<img src='css/imagens/est_cheia.png' alt='1' height='15' width='15'/>"				
-				+ "<img src='css/imagens/est_cheia.png' alt='1' height='15' width='15'/>Nota:3"
+				+ "<img src='css/imagens/est_cheia.png' alt='1' height='15' width='15'/>"				
+				+ "<img src='css/imagens/est_cheia.png' alt='1' height='15' width='15'/>Nota:3</br>"
 				// + "<input type='button' value='Rota' onclick='ponto(" + ponto.lat + "," + ponto.long + ")' /></p>"
-				+ "<input type='button' value='Carro' onclick='ponto(" + ponto.lat + "," + ponto.long + ",1)' />"
-				+ "<input type='button' value='Pé' onclick='ponto(" + ponto.lat + "," + ponto.long + ",2)' />"
+				+ "<input type='button' value='Carro' onclick='ponto(" + ponto.lat + "," + ponto.long + ",1)' style='padding:8px;' />"
+				+ "<input type='button' value='Pé' onclick='ponto(" + ponto.lat + "," + ponto.long + ",2)' style='padding:8px;' />"
 				// + "<input type='button' value='Bike' onclick='ponto(" + ponto.lat + "," + ponto.long + ",3)' />"
-				+ "<input type='button' value='Bus' onclick='ponto(" + ponto.lat + "," + ponto.long + ",4)' /></p>"
-				+ "<p>" + ponto.endereco + "</p><p>Especialidades:</p>"
+				+ "<input type='button' value='Bus' onclick='ponto(" + ponto.lat + "," + ponto.long + ",4)' style='padding:8px;' /></p>"
+				+ "<p><b>Endere&ccedil;o:</b></p>"
+				+ "<p>" + ponto.endereco + "</p>"
+				+ "<p><b>Tel: </b>" + ponto.tel + "	<b>Adm:</b> " + ponto.adm + "</p><p>Especialidades:</p>"
 				+ "<p><a target='_blank' href=" + ponto.site + ">Site</a></p>",
 				pixelOffset: new google.maps.Size(-150, 0)
         	};
@@ -403,3 +419,64 @@ function ponto(lat, long, transp){
    });
 	
 }
+
+
+
+/*Função para buscar unidade de PA mais proxima do usuário*/
+function buscaAtendimento(){
+	var latUsuario = document.getElementById("latUsuario");
+	var longUsuario = document.getElementById("longUsuario");
+	var service = new google.maps.DistanceMatrixService();
+	var localUsuario = new google.maps.LatLng(latUsuario.value, longUsuario.value);
+	var destinos = "";
+	// endDestino = "";
+	
+	for (var i = 0; i < markers.length; i++) {
+		// destinos += markers[i].position + ",";
+		
+		service.getDistanceMatrix(
+		{
+			origins: [localUsuario],
+			destinations: [markers[i].position],
+			travelMode: google.maps.TravelMode.DRIVING,
+		    avoidHighways: false,
+		    avoidTolls: false
+		  }, callback);
+
+		if (i == (markers.length - 1)) {			
+			var execTempo = setInterval(function(){resultaResultado();clearInterval(execTempo)}, 2000);
+			// clearInterval(execTempo);
+		};
+	
+	}
+		
+}
+
+function resultaResultado(){
+	geocoder.geocode({'address': endDestino}, function(results, status){
+		 	if(status == google.maps.GeocoderStatus.OK){
+		 		var localizacaoResp = results[0].geometry.location.toString();
+		 		var respostaGeocode = localizacaoResp.split(",");
+		 		respostaGeocode[0]  = respostaGeocode[0].substring(1, respostaGeocode[0].length);
+		 		respostaGeocode[1]  = respostaGeocode[1].substring(0, (respostaGeocode[1].length - 1));
+
+		 		ponto(respostaGeocode[0], respostaGeocode[1], "1");
+		 		
+ 			}
+	})
+}
+
+
+function callback(response, status) {
+	 if (status == google.maps.DistanceMatrixStatus.OK) {
+	 	if (response.rows[0].elements[0].status == "OK") {	 	
+	 		var destino = response.destinationAddresses;
+	 		if (valorDestino == 0) { valorDestino = response.rows[0].elements[0].distance.value};
+	 		if (response.rows[0].elements[0].distance.value < valorDestino) {
+	 			valorDestino = response.rows[0].elements[0].distance.value;
+	 			endDestino = destino[0]; 	 				 			
+	 		};
+			// alert(response.rows[0].elements[0].distance.value);	 	 								
+	 	};	 	
+	 }
+  }

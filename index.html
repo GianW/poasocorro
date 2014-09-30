@@ -1,8 +1,10 @@
 <!doctype html>
 <html>
 <head>	
-	<title>Dados</title>
+	<title>POA Socorro</title>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/estilo.css"> 
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui.custom.min.css"> 	
 	<link rel="shortcut icon" href="css/imagens/img1.png">
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<!-- Bibliotecas Google Maps -->
@@ -10,29 +12,47 @@
 	<script src="js/infobox.js"></script>
     <!-- Agrupamento dos marcadores -->
 	<script src="js/markerclusterer.js"></script>
+	<!-- Bibliotecas auxiliares -->
 	<script src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.custom.min.js"></script>	
 	<!-- Biblioteca propria -->
-	<script src="js/porto.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/estilo.css"> 
+	<script src="js/porto.js"></script>	
 </head>
-
 <body onload="initialize()">
-	<header>
-		<div id="titulo">
-			<h1>POA<b>Socorro</b></h1>
-		</div>
+	<header>		
+		<div id="titulo" onclick="window.location.reload();">			
+			<h1>POA <b>Socorro</b></h1>
+		</div>		
 	</header>
-	<section class="busca">
-		<div class="dadosPesquisa">
-			<input type="text" class="inputPesquisa"> 
-			<input type="button" value="Pesquisar" class="btPesquisa">
-		</div>			
-	</section>	
-	<div id="mapa" class="boxMapa">		
-	</div>
-	<!--<div class="twitter">		
-		TUITER
-	</div>-->
+	<section class="busca">	
+		<div class="dadosPesquisa">	
+			<table>
+			<th>
+			<td>
+			<img src="css/imagens/search.png" alt=" " width="35">
+			</td>
+			<td style="width:100%">	
+			<input type="text" id="valorPesquisa" class="inputPesquisa"/> 
+			</td>
+			<!-- <input type="button" class="btPesquisa" value="Buscar" onclick="pesquisa()"/> -->
+			<td>
+			<div class="btPesquisa" onclick="pesquisa()"><span style="width:40%;">Pesquisar</span></div>
+			</td>
+			<td>
+			<div class="btPesquisa" onclick="buscaAtendimento();"><span style="width:40%;">Prox</span></div>				
+			<!-- <input type="image" class="btPesquisa" src='css/imagens/location.png' style="width:20px;" onclick="buscaAtendimento();"/> -->
+			<!-- <input type="button" value="Pesquisar" class="btPesquisa"> -->	
+			</td>
+			</th>	
+			</table>	
+		</div>	
 
+	</section>
+	<div id="conteudoMapa">
+		<div id="mapa" class="boxMapa"></div>
+		<div id="trajeto-texto"></div>
+	</div>	
+	<div id="tratatexto"hidden></div>
+	<div id="coordenadas"><input type="hidden" id="latUsuario"><input type="hidden" id="longUsuario"></div>
 </body>
 </html>
