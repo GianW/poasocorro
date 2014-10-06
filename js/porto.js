@@ -186,6 +186,11 @@ $.getJSON('app/services/buscaDados.php?service=listaespecialidades', function(po
  	source: avaibleTags
  });
 
+ 	//Atribuir funções sobre conteudo
+	$(document).ready(function(){
+		$(".content_about").colorbox({iframe:true, width:"90%",height:"90%"});
+	}); 
+
 }             
 
 function abrirInfoBox(id, marker) {
@@ -223,15 +228,16 @@ $.getJSON(caminho, function(pontos){
 				+ "<img src='" + ponto.img + "' alt=''></p><hr>"
 				+ "<img src='css/imagens/est_cheia.png' alt='1' height='15' width='15'/>"				
 				+ "<img src='css/imagens/est_cheia.png' alt='1' height='15' width='15'/>"				
-				+ "<img src='css/imagens/est_cheia.png' alt='1' height='15' width='15'/>Nota:3</br>"
+				+ "<img src='css/imagens/est_cheia.png' alt='1' height='15' width='15'/>Nota:3</br></br>"
 				// + "<input type='button' value='Rota' onclick='ponto(" + ponto.lat + "," + ponto.long + ")' /></p>"
-				+ "<input type='button' value='Carro' onclick='ponto(" + ponto.lat + "," + ponto.long + ",1)' style='padding:8px;' />"
+				+ "<input type='button' value='Carro' onclick='ponto(" + ponto.lat + "," + ponto.long + ",1)' style='padding:8px;margin-left:10px;' />"
 				+ "<input type='button' value='Pé' onclick='ponto(" + ponto.lat + "," + ponto.long + ",2)' style='padding:8px;' />"
 				// + "<input type='button' value='Bike' onclick='ponto(" + ponto.lat + "," + ponto.long + ",3)' />"
-				+ "<input type='button' value='Bus' onclick='ponto(" + ponto.lat + "," + ponto.long + ",4)' style='padding:8px;' /></p>"
+				+ "<input type='button' value='Bus' onclick='ponto(" + ponto.lat + "," + ponto.long + ",4)' style='padding:8px;' />"
+				+ "<img src='css/imagens/info.png' alt='' width='35' style='float:right;margin-right:10px;cursor:pointer;' onclick='exibeInfoEstab("+ ponto.id +")'/></p>"
 				+ "<p><b>Endere&ccedil;o:</b></p>"
 				+ "<p>" + ponto.endereco + "</p>"
-				+ "<p><b>Tel: </b>" + ponto.tel + "	<b>Adm:</b> " + ponto.adm + "</p><p>Especialidades:</p>"
+				+ "<p><b>Tel: </b>" + ponto.tel + "	<b>Adm:</b> " + ponto.adm + "</p><p><b>Funcionamento: </b>" +ponto.hr_func+" </p>"
 				+ "<p><a target='_blank' href=" + ponto.site + ">Site</a></p>",
 				pixelOffset: new google.maps.Size(-150, 0)
         	};
@@ -254,9 +260,9 @@ $.getJSON(caminho, function(pontos){
 		
 		 map.fitBounds(latlngbounds);
 
-		 localizaUsuario();
-		
-	});       	        
+		 localizaUsuario();		
+	});    	        
+ 
 
 } 
 
@@ -480,3 +486,16 @@ function callback(response, status) {
 	 	};	 	
 	 }
   }
+function enviarPesquisa(evento){
+	var tecla = evento.keyCode;
+	if (tecla == 0) {
+		document.getElementById("btPesquisar").click();
+	}
+	if (tecla == 13) {
+		document.getElementById("btPesquisar").click();	
+	};
+}
+
+function exibeInfoEstab(num){
+	$.colorbox({href:"app/content/info.html?estab="+ num,iframe:true,width:"90%",height:"90%"});
+}

@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="css/estilo.css"> 
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui.custom.min.css"> 	
+	<link rel="stylesheet" type="text/css" href="css/colorbox.css"> 	
 	<link rel="shortcut icon" href="css/imagens/img1.png">
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<!-- Bibliotecas Google Maps -->
@@ -14,14 +15,16 @@
 	<script src="js/markerclusterer.js"></script>
 	<!-- Bibliotecas auxiliares -->
 	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.colorbox-min.js"></script>
 	<script type="text/javascript" src="js/jquery-ui.custom.min.js"></script>	
 	<!-- Biblioteca propria -->
 	<script src="js/porto.js"></script>	
 </head>
 <body onload="initialize()">
 	<header>		
-		<div id="titulo" onclick="window.location.reload();">			
-			<h1>POA <b>Socorro</b></h1>
+		<a href="app/content/sobre.html" class="content_about" style="float: right;margin-right: 3%;margin-top: 3%;" >SOBRE</a>
+		<div id="titulo" onclick="window.location.reload();">				
+			<h1 style="margin-top:2%;margin-bottom:5%;">POA <b>Socorro</b></h1>					
 		</div>		
 	</header>
 	<section class="busca">	
@@ -32,11 +35,11 @@
 			<img src="css/imagens/search.png" alt=" " width="35">
 			</td>
 			<td style="width:100%">	
-			<input type="text" id="valorPesquisa" class="inputPesquisa"/> 
+			<input type="text" id="valorPesquisa" class="inputPesquisa" onkeypress="enviarPesquisa(event)"/> 
 			</td>
 			<!-- <input type="button" class="btPesquisa" value="Buscar" onclick="pesquisa()"/> -->
 			<td>
-			<div class="btPesquisa" onclick="pesquisa()"><span style="width:40%;">Pesquisar</span></div>
+			<div class="btPesquisa" id="btPesquisar" onclick="pesquisa()"><span style="width:40%;">Pesquisar</span></div>
 			</td>
 			<td>
 			<div class="btPesquisa" onclick="buscaAtendimento();"><span style="width:40%;">Prox</span></div>				

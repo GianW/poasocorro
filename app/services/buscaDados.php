@@ -125,7 +125,7 @@ function pesquisa($valorPesquisa){
 
 							$arr = array('id' => $result_aux[0], 'nome' => $result_aux[1], 'tipo' => $result_aux[2], 'adm' => $result_aux[3],
 							 			 'tel' => $result_aux[4], 'site' => $result_aux[5], 'lat' => $result_aux[6], 'long' => $result_aux[7],
-							 			  'endereco' => $result_aux[8], 'hr_func' => $result[9], 'img' => $result[10]);
+							 			  'endereco' => $result_aux[8], 'hr_func' => $result_aux[9], 'img' => $result_aux[10]);
 
 							$safe = array_map('htmlentities',$arr);
 
