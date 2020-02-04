@@ -4,7 +4,7 @@ poasocorro
 
 Repositório para o projeto POA SOCORRO 
 
-<a href="http://poasocorro.com.br/" target="blank">POA SOCORRO</a>
+<a href="https://poasocorro.com.br/" target="_blank">POA SOCORRO</a>
 
 
 
