@@ -1,14 +1,32 @@
 import React, { Component } from 'react';
-import logo from './assets/poa_socorro.jpg';
 import './App.css';
+import Map from './components/Map.js';
+import EstabList from './components/EstabList.js';
+import Estabs from './data/estabs.json'
 
 class App extends Component {
+
+  state = {
+    Estabs: Estabs
+  }
+
   render() {
+
+    const { Estabs } = this.state
+
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} alt="logo"/>
+          <p>POA SOCORRO</p>
         </header>
+        <section>
+          <div className="detail">
+            <EstabList stabs={Estabs} />
+          </div>
+          <div className="map">
+            <Map stabs={Estabs}/>
+          </div>
+        </section>
       </div>
     );
   }
