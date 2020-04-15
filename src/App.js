@@ -10,6 +10,14 @@ class App extends Component {
     Estabs: Estabs
   }
 
+  updateEstabs = () => {
+    this.setState({Estabs: Estabs.filter(est => est.tipo === "Hospital")})
+  }
+
+  componentDidMount() {
+    this.updateEstabs()
+  }
+
   render() {
 
     const { Estabs } = this.state
@@ -18,6 +26,9 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <p>POA SOCORRO</p>
+          <span>
+            <input type="text" placeholder="Pesquisar"/>
+          </span>
         </header>
         <section>
           <div className="detail">
