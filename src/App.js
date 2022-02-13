@@ -1,17 +1,11 @@
-import React, { Component } from 'react';
-import logo from './assets/poa_socorro.jpg';
-import './App.css';
+import * as React from "react";
+import { AppProviders } from "./contexts/Appproviders";
+import { Main } from "./components/Main/Main";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} alt="logo"/>
-        </header>
-      </div>
-    );
-  }
+export default function App() {
+  return (
+    <AppProviders>
+      <Main />
+    </AppProviders>
+  );
 }
-
-export default App;
