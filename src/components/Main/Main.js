@@ -12,17 +12,21 @@ export const Main = () => {
       container
       spacing={2}
       className={classes.root}
-      alignItems="flex-start"
       direction="row"
       justifyContent="center"
     >
       <AppHeader />
-      <Grid item xs={3} style={{ backgroundColor: "black" }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          mahoe
+      <Grid
+        item
+        xs={4}
+        style={{ backgroundColor: "black", color: "white" }}
+        justifyContent="center"
+      >
+        <Typography variant="body1" component="h1" gutterBottom>
+          lista de unidades
         </Typography>
       </Grid>
-      <Grid item xs={9}>
+      <Grid xs={8}>
         <Map />
       </Grid>
     </Grid>

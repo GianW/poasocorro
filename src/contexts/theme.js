@@ -23,9 +23,9 @@ export const theme = ({ mode = "dark" }) =>
     },
     typography: {
       fontFamily: [
-        "Google Sans",
-        '"Roboto"',
         '"Helvetica"',
+        '"Roboto"',
+        "Google Sans",
         '"Arial"',
         "sans-serif"
       ].join(",")
