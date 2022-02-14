@@ -1,9 +1,13 @@
 import * as React from "react";
 
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { AppHeader } from "../Header/Header";
 import { Map } from "../Map/Map";
+import { ListaUnidades } from "../ListaUnidades/ListaUnidades";
+
+// insp
+// https://dev.to/maj07/tutorial-react-leaflet-d65
 
 export const Main = () => {
   const classes = useStyles();
@@ -16,15 +20,8 @@ export const Main = () => {
       justifyContent="center"
     >
       <AppHeader />
-      <Grid
-        item
-        xs={4}
-        style={{ backgroundColor: "black", color: "white" }}
-        justifyContent="center"
-      >
-        <Typography variant="body1" component="h1" gutterBottom>
-          lista de unidades
-        </Typography>
+      <Grid item xs={4} style={{ backgroundColor: "black", color: "white" }}>
+        <ListaUnidades />
       </Grid>
       <Grid xs={8}>
         <Map />
