@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AppBar, Typography, Toolbar } from "@mui/material";
-import { makeStyles, useTheme } from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 
 export const Header = () => {
   const classes = useStyles();
