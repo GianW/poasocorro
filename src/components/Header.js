@@ -7,7 +7,6 @@ export const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar className={classes.toolBar}>
-        <>a</>
         <Typography variant="h6" component="div">
           POA Socorro
         </Typography>
@@ -22,7 +21,7 @@ const useStyles = makeStyles(() => {
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
-      "& > :second-child": {
+      "& > :first-child": {
         marginLeft: "85%",
       },
     },
