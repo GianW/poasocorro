@@ -30,7 +30,7 @@ export const PlacesList = ({ dados }) => {
                 </Typography>
                 <Typography
                   variant="body2"
-                  style={{ maxWidth: "95%", overflowWrap: "break-word" }}
+                  style={{ maxWidth: "98%", overflowWrap: "break-word" }}
                 >
                   <strong>Especialidades:</strong>
                   <br />

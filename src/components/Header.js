@@ -5,30 +5,37 @@ import {
   Toolbar,
   TextField,
   InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import SearchIcon from "@mui/icons-material/Search";
+import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
 
 export const Header = ({ handleChange }) => {
   const classes = useStyles();
   return (
     <AppBar position="static">
       <Toolbar className={classes.toolBar}>
-        <TextField
-          id="pesquisar"
-          label=""
-          variant="outlined"
-          margin="dense"
-          size="small"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-          onChange={handleChange}
-        />
+        <div>
+          <TextField
+            id="pesquisar"
+            label=""
+            variant="outlined"
+            margin="dense"
+            size="small"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+            onChange={handleChange}
+          />
+          <IconButton aria-label="Settings" size="large">
+            <DisplaySettingsIcon fontSize="inherit" />
+          </IconButton>
+        </div>
         <Typography variant="h6" component="div">
           POA Socorro
         </Typography>
