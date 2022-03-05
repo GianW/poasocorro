@@ -11,7 +11,7 @@ import { makeStyles } from "@mui/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import DisplaySettingsIcon from "@mui/icons-material/DisplaySettings";
 
-export const Header = ({ handleChange }) => {
+export const Header = ({ handleChange, openConfig }) => {
   const classes = useStyles();
   return (
     <AppBar position="static">
@@ -32,7 +32,7 @@ export const Header = ({ handleChange }) => {
             }}
             onChange={handleChange}
           />
-          <IconButton aria-label="Settings" size="large">
+          <IconButton aria-label="Settings" size="large" onClick={openConfig}>
             <DisplaySettingsIcon fontSize="inherit" />
           </IconButton>
         </div>

@@ -4,13 +4,16 @@ import { Header } from "./Header";
 import { PlacesList } from "./PlacesList/PlacesList";
 import { Map } from "./Map/Map";
 import dados from "../data/dados.json";
+import { Filter } from "./Filter/Filter";
 
 export const Main = () => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
   const [state, setState] = React.useState({
     dados: dados,
     filter: "",
-    category: "",
-    specialty: "Hospital",
+    category: ["Hospital"],
+    specialty: [],
   });
 
   const stabs = React.useMemo(() => filterData(state), [state]);
@@ -22,9 +25,16 @@ export const Main = () => {
     });
   };
 
+  const setFilter = (categories, specialties) =>
+    setState({
+      ...state,
+      category: categories,
+      specialty: specialties,
+    });
+
   return (
     <>
-      <Header handleChange={handleChangeFilter} />
+      <Header handleChange={handleChangeFilter} openConfig={handleOpen} />
       <Grid container layout={"row"}>
         <Grid item xs={4}>
           <PlacesList dados={stabs} />
@@ -33,13 +43,24 @@ export const Main = () => {
           <Map dados={stabs} />
         </Grid>
       </Grid>
+      <Filter
+        open={open}
+        setOpen={setOpen}
+        setFilter={setFilter}
+        state={state}
+      />
     </>
   );
 };
 
 const filterData = (state) =>
   state.dados
-    .filter((stab) => stab.tipo === state.specialty)
+    .filter((stab) => state.category.includes(stab.tipo))
+    .filter((stab) => {
+      return state.specialty.length > 0
+        ? stab.especialidades.some((r) => state.specialty.includes(r))
+        : true;
+    })
     .filter((stab) => {
       let expres = new RegExp(state.filter, "i");
       if (stab.filter === "") {

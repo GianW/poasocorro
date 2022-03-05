@@ -1,16 +1,12 @@
 import * as React from "react";
 import { Grid, Card, CardHeader, CardContent, Typography } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
 export const PlacesList = ({ dados }) => {
+  const classes = useStyles();
   return (
     <>
-      <Grid
-        style={{
-          height: "90vh",
-          backgroundColor: "#4d4b49",
-          overflow: "auto",
-        }}
-      >
+      <Grid className={classes.gridBox}>
         {dados &&
           dados.map((place) => (
             <Card key={place.cod_estab} style={{ margin: "12px" }}>
@@ -43,3 +39,24 @@ export const PlacesList = ({ dados }) => {
     </>
   );
 };
+
+const useStyles = makeStyles(() => {
+  return {
+    gridBox: {
+      height: "90vh",
+      backgroundColor: "#4d4b49",
+      overflow: "auto",
+      "&::-webkit-scrollbar": {
+        width: "0.5em",
+      },
+      "&::-webkit-scrollbar-track": {
+        boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+        webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        backgroundColor: "#1a1919",
+        outline: "1px solid #4f1616",
+      },
+    },
+  };
+});
