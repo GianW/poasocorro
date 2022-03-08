@@ -10,7 +10,6 @@ import {
   Card,
   IconButton,
   Chip,
-  Stack,
 } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { makeStyles } from "@mui/styles";
@@ -20,7 +19,6 @@ export const Details = () => {
   const classes = useStyles();
   const unit = setUnit(params.nome);
   let navigate = useNavigate();
-  console.log(unit);
   return (
     <>
       <AppBar position="static">
@@ -73,30 +71,33 @@ export const Details = () => {
                   <a
                     target="_blank"
                     rel="noreferrer"
-                    href={`https://www.google.com/maps/@${unit.latitude},${unit.longitude}`}
+                    href={`https://www.google.com/maps/place/@${unit.latitude},${unit.longitude}`}
                   >
                     Ver no Google maps
                   </a>
                 </Typography>
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  className={classes.especList}
-                >
+                <div className={classes.especList}>
                   {unit.especialidades.map((especialidade) => (
                     <Chip
                       label={especialidade}
                       variant="outlined"
                       key={especialidade}
                       color="secondary"
+                      className={classes.chip}
                     />
                   ))}
-                </Stack>
+                </div>
               </Grid>
               <Grid item xs={5}>
                 <img
                   src={unit.imagem}
+                  width={400}
                   alt="Foto da frente do estabelecimento de saúde "
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null; // prevents looping
+                    currentTarget.src =
+                      "https://www.agenciapreview.com/wp-content/uploads/2018/10/Foto-Orla-Moacyr-Scliar-1-860x480.jpg";
+                  }}
                 />
               </Grid>
             </Grid>
@@ -125,6 +126,11 @@ const useStyles = makeStyles(() => {
     },
     especList: {
       marginTop: "1%",
+      display: "inline-block",
+    },
+    chip: {
+      padding: "5px",
+      margin: "5px",
     },
   };
 });
