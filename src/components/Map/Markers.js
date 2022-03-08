@@ -1,5 +1,7 @@
 import { Marker, Popup } from "react-leaflet";
-import { Typography } from "@mui/material";
+import { Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import slugify from "react-slugify";
 
 import L from "leaflet";
 
@@ -10,8 +12,9 @@ const markerIcon = new L.Icon({
   popupAnchor: [0, -40],
 });
 
-export const Markers = ({ dados }) =>
-  dados.map((pt) => (
+export const Markers = ({ dados }) => {
+  const navigate = useNavigate();
+  return dados.map((pt) => (
     <Marker
       icon={markerIcon}
       position={[pt.latitude, pt.longitude]}
@@ -29,6 +32,14 @@ export const Markers = ({ dados }) =>
         <Typography variant="body2">
           <strong>Tipo:</strong> {pt.tipo}
         </Typography>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => navigate(`/details/${slugify(pt.nome)}`)}
+        >
+          Detalhes
+        </Button>
       </Popup>
     </Marker>
   ));
+};
