@@ -1,6 +1,6 @@
 import ReactGA from "react-ga";
 
-const TRACKING_ID = "UA-57710189-1";
+const TRACKING_ID = "G-V74WZS2RM8";
 ReactGA.initialize(TRACKING_ID);
 
 export const gaTrack = ReactGA;
