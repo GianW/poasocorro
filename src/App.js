@@ -1,6 +1,11 @@
 import * as React from "react";
-import { Main } from "./components/Main";
+import { AppRouter } from "./components/AppRouter";
+import { gaTrack } from "./contexts/gaTrack";
 
 export default function App() {
-  return <Main />;
+  React.useEffect(() => {
+    gaTrack.pageview(window.location.pathname + window.location.search);
+  }, []);
+
+  return <AppRouter />;
 }
