@@ -1,142 +1,187 @@
 import * as React from "react";
 import {
-  Modal,
   Box,
+  Chip,
+  Divider,
+  Drawer,
   Typography,
-  Grid,
   Button,
-  Switch,
   FormGroup,
   FormControlLabel,
+  Checkbox,
+  Stack,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
+import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
+import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
+import VaccinesIcon from "@mui/icons-material/Vaccines";
 import tipos from "../../data/tipos.json";
 import especialidades from "../../data/especialidades.json";
 
+const tipoIcons = {
+  Hospital: <LocalHospitalIcon fontSize="small" />,
+  PA: <MedicalServicesIcon fontSize="small" />,
+  CS: <HealthAndSafetyIcon fontSize="small" />,
+  UBS: <HealthAndSafetyIcon fontSize="small" />,
+  ESF: <VaccinesIcon fontSize="small" />,
+  "ESF ": <VaccinesIcon fontSize="small" />,
+  AEM: <MedicalServicesIcon fontSize="small" />,
+  AEC: <MedicalServicesIcon fontSize="small" />,
+};
+
+export const CategoryBar = ({ categories, onToggleCategory }) => {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        gap: 1,
+        px: 3,
+        py: 1.5,
+        overflowX: "auto",
+        "&::-webkit-scrollbar": { display: "none" },
+      }}
+    >
+      {tipos.map((tipo) => {
+        const isActive = categories.includes(tipo.trim());
+        return (
+          <Chip
+            key={tipo}
+            label={tipo.trim()}
+            icon={tipoIcons[tipo] || <MedicalServicesIcon fontSize="small" />}
+            onClick={() => onToggleCategory(tipo.trim())}
+            variant={isActive ? "filled" : "outlined"}
+            sx={{
+              flexShrink: 0,
+              fontWeight: 500,
+              borderColor: isActive ? "text.primary" : "divider",
+              backgroundColor: isActive ? "text.primary" : "transparent",
+              color: isActive ? "background.paper" : "text.primary",
+              "& .MuiChip-icon": {
+                color: isActive ? "background.paper" : "text.secondary",
+              },
+              "&:hover": {
+                backgroundColor: isActive ? "text.primary" : "action.hover",
+              },
+            }}
+          />
+        );
+      })}
+    </Box>
+  );
+};
+
 export const Filter = ({ open, setOpen, setFilter, state }) => {
+  const theme = useTheme();
   const handleClose = () => setOpen(false);
 
   const [lists, setLists] = React.useState({
-    categories: initialList(tipos, state.category),
     specialities: initialList(especialidades, state.specialty),
   });
 
-  const checkSpeciality = (event) => {
-    let newSpec = lists.specialities.map((val) => {
-      if (val.name === event.target.id) {
-        val.checked = !val.checked;
-      }
-      return val;
-    });
+  React.useEffect(() => {
+    setLists({ specialities: initialList(especialidades, state.specialty) });
+  }, [state.specialty]);
 
-    setLists({ ...lists, specialities: newSpec });
-  };
-
-  const checkCategory = (event) => {
-    let newSpec = lists.categories.map((val) => {
-      if (val.name === event.target.id) {
-        val.checked = !val.checked;
-      }
-      return val;
-    });
-
-    setLists({ ...lists, categories: newSpec });
+  const checkSpeciality = (name) => {
+    setLists((prev) => ({
+      specialities: prev.specialities.map((val) =>
+        val.name === name ? { ...val, checked: !val.checked } : val
+      ),
+    }));
   };
 
   const updateFilter = () => {
     setFilter(
-      lists.categories.filter((elem) => elem.checked).map((elem) => elem.name),
-      lists.specialities.filter((elem) => elem.checked).map((elem) => elem.name)
+      state.category,
+      lists.specialities.filter((e) => e.checked).map((e) => e.name)
     );
     handleClose();
   };
 
+  const clearAll = () => {
+    setLists({ specialities: initialList(especialidades, []) });
+  };
+
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Filtro de busca
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid
-            item
-            xs={6}
-            style={{
-              maxHeight: "100vh",
-              columnCount: "2",
-              columnGap: "50%",
-            }}
+    <Drawer anchor="right" open={open} onClose={handleClose}>
+      <Box
+        sx={{
+          width: 360,
+          p: 3,
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          backgroundColor: "background.paper",
+          height: "100%",
+        }}
+      >
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Typography variant="h6" fontWeight={700}>
+            Filtros
+          </Typography>
+          <Button
+            size="small"
+            onClick={clearAll}
+            sx={{ color: "text.secondary", textDecoration: "underline" }}
           >
-            <Typography>Especialidades</Typography>
-            <FormGroup>
-              {lists &&
-                lists.specialities.map((espec) => (
-                  <SwitchButton
-                    key={espec.name}
-                    elem={espec}
-                    changeFunc={checkSpeciality}
-                  />
-                ))}
-            </FormGroup>
-          </Grid>
-          <Grid item xs={1}></Grid>
-          <Grid item xs={5}>
-            <Typography>Tipos</Typography>
-            <FormGroup>
-              {lists &&
-                lists.categories.map((tipo) => (
-                  <SwitchButton
-                    key={tipo.name}
-                    elem={tipo}
-                    changeFunc={checkCategory}
-                  />
-                ))}
-            </FormGroup>
-          </Grid>
-          <Grid item xs={8}></Grid>
-          <Grid item xs={4}>
-            <Button variant="contained" onClick={updateFilter}>
+            Limpar tudo
+          </Button>
+        </Box>
+
+        <Divider />
+
+        <Typography variant="subtitle1" fontWeight={600}>
+          Especialidades
+        </Typography>
+        <FormGroup>
+          {lists.specialities.map((espec) => (
+            <FormControlLabel
+              key={espec.name}
+              control={
+                <Checkbox
+                  checked={espec.checked}
+                  onChange={() => checkSpeciality(espec.name)}
+                  sx={{
+                    color: "divider",
+                    "&.Mui-checked": { color: "text.primary" },
+                  }}
+                />
+              }
+              label={
+                <Typography variant="body2" sx={{ textTransform: "capitalize" }}>
+                  {espec.name}
+                </Typography>
+              }
+            />
+          ))}
+        </FormGroup>
+
+        <Box sx={{ mt: "auto", pt: 2 }}>
+          <Divider sx={{ mb: 2 }} />
+          <Stack direction="row" justifyContent="flex-end">
+            <Button
+              variant="contained"
+              onClick={updateFilter}
+              sx={{
+                borderRadius: "8px",
+                backgroundColor: theme.palette.text.primary,
+                color: theme.palette.background.paper,
+                "&:hover": {
+                  backgroundColor:
+                    theme.palette.mode === "dark" ? "#CCCCCC" : "#444444",
+                },
+                px: 4,
+              }}
+            >
               Aplicar filtros
             </Button>
-          </Grid>
-        </Grid>
+          </Stack>
+        </Box>
       </Box>
-    </Modal>
+    </Drawer>
   );
 };
 
-const SwitchButton = ({ elem, changeFunc }) => (
-  <FormControlLabel
-    key={elem.name}
-    control={
-      <Switch
-        id={elem.name}
-        checked={elem.checked}
-        color="secondary"
-        onChange={changeFunc}
-      />
-    }
-    label={elem.name}
-  />
-);
-
 const initialList = (dados, checkedList) =>
   dados.map((dado) => ({ name: dado, checked: checkedList.includes(dado) }));
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "70%",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
