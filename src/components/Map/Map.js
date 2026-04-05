@@ -6,8 +6,6 @@ import "./Map.css";
 
 const position = [-30.048598, -51.1976142];
 const MAPBOX_API_KEY = process.env.REACT_APP_MAPBOX_API_KEY;
-const MAPBOX_USERID = process.env.REACT_APP_MAPBOX_USERID;
-const MAPBOX_STYLEID = process.env.REACT_APP_MAPBOX_STYLEID;
 
 const BoundsTracker = ({ onBoundsChange }) => {
   const map = useMapEvents({

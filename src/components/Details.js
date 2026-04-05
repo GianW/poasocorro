@@ -10,7 +10,6 @@ import {
   Divider,
   Button,
 } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
@@ -48,7 +47,6 @@ const HeroImage = ({ src, alt }) => {
 export const Details = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const theme = useTheme();
   const unit = dados.find((u) => slugify(u.nome) === params.nome);
 
   if (!unit) {
